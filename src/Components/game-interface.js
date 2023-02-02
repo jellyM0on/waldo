@@ -1,56 +1,36 @@
 import { useState, useEffect } from 'react';
 import './Styles/game-interface.css'; 
+import Timer from './game-timer';
 
 export default function Game() {
-    const [time, setTime] = useState(0); 
     const [finished, setFinished] = useState(0);
 
-    const elapsedTime = (hrs, mins, secs) => {
-        hrs = cleanTime(hrs);
-        mins = cleanTime(mins); 
-        secs = cleanTime(secs); 
-        return { hrs, mins, secs }
-    }
-   
-    function cleanTime(time){
-        time = time >= 10 ? time : `0${time}`;
-        return time; 
+    const getCoord = (event) => {
+        console.log(event.clientY);
+        console.log(event.clientX); 
+        if((event.clientY > 130 && event.clientY < 170) && (event.clientX > 400 && event.clientX < 440)){
+            setFinished(1); 
+            // console.log(finished); 
+        }
     }
 
-    let secs = 0 , mins = 0, hrs = 0;  
-    function trackTime() {
-        secs += 1;
-        if(secs == 60){
-            secs = 0; 
-            mins += 1; 
-        }
-        if(mins == 60){
-            mins = 0; 
-            hrs += 1; 
-        }
-        let elTime = (elapsedTime(hrs, mins, secs)); 
-        setTime(`${elTime.hrs}:${elTime.mins}:${elTime.secs}`)
+    const finishGame = () => {
+        setFinished(1); 
     }
- 
-    useEffect(() => {
-        if (!finished){
-            const interval = setInterval(() => trackTime(), 1000); 
-            return () => {
-                clearInterval(interval); 
-            }
-        } 
-    }, []);
     
     return(
         <div>
             <div>Where's Waldo</div>
             <div className='timer-container'>
-                <p>{time}</p>
+                <Timer finished={finished}/>
             </div>
 
-            <div className='pic-container'>
-                <img src='https://i.imgur.com/lBqwrz4.jpeg'></img>
-            </div>
+            <form>
+                <div className='pic-container' onClick={getCoord}>
+                    <img src='https://i.imgur.com/lBqwrz4.jpeg'></img>
+                </div>
+            </form>
+           
         </div>
     )
 }
