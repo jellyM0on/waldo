@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import GameFinish from './game-finish';
 
 export default function Timer(props) {
     const { finished } = props;
@@ -35,17 +36,27 @@ export default function Timer(props) {
     }
 
     useEffect(() => {
-            const interval = setInterval(() => {
-                if(finished != 1){
-                    trackTime(); 
-                } 
-            }, 1000); 
-            return () => {
-                clearInterval(interval); 
-            }
+        const interval = setInterval(() => {
+            if(finished != 1){
+                trackTime(); 
+            } 
+        }, 1000); 
+        return () => {
+            clearInterval(interval); 
+        }
     }, [finished]);
 
+    const FinishGame = () => {
+        if(finished){
+            return <GameFinish time={time}/>
+        }
+    }
+
     return(
-        <p>{time}</p>
+        <div>
+            <p>{time}</p>
+            <FinishGame/>
+        </div>
+        
     )
 }

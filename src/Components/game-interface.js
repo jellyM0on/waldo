@@ -10,14 +10,9 @@ export default function Game() {
         console.log(event.clientX); 
         if((event.clientY > 130 && event.clientY < 170) && (event.clientX > 400 && event.clientX < 440)){
             setFinished(1); 
-            // console.log(finished); 
         }
     }
 
-    const finishGame = () => {
-        setFinished(1); 
-    }
-    
     return(
         <div>
             <div>Where's Waldo</div>
@@ -30,7 +25,6 @@ export default function Game() {
                     <img src='https://i.imgur.com/lBqwrz4.jpeg'></img>
                 </div>
             </form>
-           
         </div>
     )
 }
