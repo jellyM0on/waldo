@@ -1,0 +1,11 @@
+#heading{
+    display: flex; 
+    justify-content: space-between;
+    margin: 20px; 
+}
+
+.heading-menu{
+    display: flex; 
+    align-items: center;
+    gap: 20px; 
+}

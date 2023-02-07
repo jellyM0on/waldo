@@ -1,3 +1,14 @@
+.selection-img {
+  width: 300px; 
+  height: 200px; 
+}
+
+.selection{
+  display: grid; 
+  grid-template-columns: 1fr 1fr;
+
+}
+
 .App {
   text-align: center;
 }

@@ -5,7 +5,7 @@ import GameFinish from './game-finish';
 
 
 export default function Game(props) {
-    const { storage, saveRecord} = props; 
+    const { data, saveRecord} = props; 
     const [time, setTime] = useState('00:00:00'); 
     const [finished, setFinished] = useState(0);
 
@@ -27,12 +27,12 @@ export default function Game(props) {
         <div>
             <div>Where's Waldo</div>
             <div className='timer-container'>
-                <Timer time={time} setTime={setTime} finished={finished} storage={storage}/>
+                <Timer time={time} setTime={setTime} finished={finished} />
             </div>
 
             <form>
                 <div className='pic-container' onClick={getCoord}>
-                    <img src='https://i.imgur.com/lBqwrz4.jpeg'></img>
+                    <img src={data.img}></img>
                 </div>
             </form>
 

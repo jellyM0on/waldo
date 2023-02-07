@@ -2,33 +2,33 @@
     "images": [
         {
             "img": "https://i.imgur.com/xJfH95R.jpeg",
-            "img-coords": [{"waldo" : [150, 420]}],
-            "img-tofind": ["waldo"],
-            "img-code": "img1-1"
+            "imgCoords": [{"waldo" : [150, 420]}],
+            "imgTofind": ["waldo"],
+            "imgCode": "img1-1"
         },
         {
             "img": "https://i.imgur.com/LnzE1JH.jpeg",
-            "img-coords": [[]],
-            "img-tofind": ["waldo", "woof", "wenda", "wiz", "odlaw"],
-            "img-code": "img1-2"
+            "imgCoors": [[]],
+            "imgTofind": ["waldo", "woof", "wenda", "wiz", "odlaw"],
+            "imgCode": "img1-2"
         },
         {
             "img": "https://i.imgur.com/c6morhS.jpeg",
-            "img-coords": [[]],
-            "img-tofind": ["waldo", "woof", "wiz", "wenda"],
-            "img-code": "img2-1"
+            "imgCoors": [[]],
+            "imgTofind": ["waldo", "woof", "wiz", "wenda"],
+            "imgCode": "img2-1"
         },
         {
             "img": "https://i.imgur.com/UQLgzwO.jpeg",
-            "img-coords": [[]],
-            "img-tofind": ["waldo", "wiz", "odlaw"],
-            "img-code": "img2-2"
+            "imgCoors": [[]],
+            "imgTofind": ["waldo", "wiz", "odlaw"],
+            "imgCode": "img2-2"
         },
         {
             "img": "https://i.imgur.com/FAvY6x9.jpeg",
-            "img-coords": [[]],
-            "img-tofind": ["waldo", "wenda", "wiz", "odlaw"],
-            "img-code": "img3-1"
+            "imgCoors": [[]],
+            "imgTofind": ["waldo", "wenda", "wiz", "odlaw"],
+            "imgCode": "img3-1"
         }
     ]
 }

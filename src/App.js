@@ -1,7 +1,9 @@
 import './App.css';
+import Header from './Components/header.js'
+import Selection from './Components/game-selection';
 import Game from './Components/game-interface';
 import * as gamelist from './Components/game-resources.json';
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App(props) {
   const { saveRecord } = props;
@@ -10,11 +12,26 @@ function App(props) {
   const imgList = JSON.parse(list); 
   const imgs = imgList.images;
 
-  console.log(imgs);
-
   return (
     <div className="App">
-      <Game saveRecord={saveRecord}/>
+      <BrowserRouter>
+        <Header/>
+        <Routes>
+          <Route exact path='/' element={<Selection imgs={imgs}/>}></Route>
+          {imgs.map((img, i) => (
+            <Route key={i} exact path={`/${img.imgCode}`} element={<Game saveRecord={saveRecord} data={img}/>} ></Route>
+          ))}
+        </Routes>
+      </BrowserRouter>
+
+
+
+
+      
+     
+      
+
+      {/* <Game saveRecord={saveRecord}/> */}
     </div>
   );
 }
