@@ -3,6 +3,7 @@ import './Styles/game-interface.css';
 import Timer from './game-timer';
 import GameFinish from './game-finish';
 
+
 export default function Game(props) {
     const { storage, saveRecord} = props; 
     const [time, setTime] = useState('00:00:00'); 
