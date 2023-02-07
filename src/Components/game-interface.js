@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
 import './Styles/game-interface.css'; 
 import Timer from './game-timer';
+import GameFinish from './game-finish';
 
-export default function Game() {
+export default function Game(props) {
+    const { storage, saveRecord} = props; 
+    const [time, setTime] = useState('00:00:00'); 
     const [finished, setFinished] = useState(0);
 
     const getCoord = (event) => {
@@ -13,11 +16,17 @@ export default function Game() {
         }
     }
 
+    const FinishGame = () => {
+        if(finished){
+            return <GameFinish time={time} saveRecord={saveRecord}/>
+        }
+    }
+
     return(
         <div>
             <div>Where's Waldo</div>
             <div className='timer-container'>
-                <Timer finished={finished}/>
+                <Timer time={time} setTime={setTime} finished={finished} storage={storage}/>
             </div>
 
             <form>
@@ -25,6 +34,9 @@ export default function Game() {
                     <img src='https://i.imgur.com/lBqwrz4.jpeg'></img>
                 </div>
             </form>
+
+            <FinishGame/>
+
         </div>
     )
 }

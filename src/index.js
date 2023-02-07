@@ -1,10 +1,17 @@
 import { initializeApp } from "firebase/app";
 import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from 'firebase/storage';
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  limit,
+  onSnapshot,
+  setDoc,
+  updateDoc,
+  doc,
+  serverTimestamp,
+} from 'firebase/firestore';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
@@ -23,25 +30,23 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig); 
 
 //save scores
-// async function saveMessage(messageText) {
-//   // Add a new message entry to the Firebase database.
-//   try {
-//     await addDoc(collection(getFirestore(), 'messages'), {
-//       name: getUserName(),
-//       text: messageText,
-//       profilePicUrl: getProfilePicUrl(),
-//       timestamp: serverTimestamp()
-//     });
-//   }
-//   catch(error) {
-//     console.error('Error writing new message to Firebase Database', error);
-//   }
-// }
+async function saveRecord(record) {
+  try {
+    await addDoc(collection(getFirestore(), 'user-records'), {
+      name: record.name,
+      time: record.time,
+      timestamp: serverTimestamp()
+    });
+  }
+  catch(error) {
+    console.error('Error saving record', error);
+  }
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <App saveRecord={saveRecord}/>
   </React.StrictMode>
 );
 

@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
-import GameFinish from './game-finish';
 
 export default function Timer(props) {
-    const { finished } = props;
-    const [time, setTime] = useState('00:00:00'); 
+    const { time, setTime, finished } = props;
 
     const elapsedTime = (hrs, mins, secs) => {
         hrs = cleanTime(hrs);
@@ -46,16 +44,9 @@ export default function Timer(props) {
         }
     }, [finished]);
 
-    const FinishGame = () => {
-        if(finished){
-            return <GameFinish time={time}/>
-        }
-    }
-
     return(
         <div>
             <p>{time}</p>
-            <FinishGame/>
         </div>
         
     )

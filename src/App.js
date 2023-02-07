@@ -1,10 +1,13 @@
 import './App.css';
 import Game from './Components/game-interface';
 
-function App() {
+function App(props) {
+  const { saveRecord } = props;
+
+  
   return (
     <div className="App">
-      <Game/>
+      <Game saveRecord={saveRecord}/>
     </div>
   );
 }
