@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import './Styles/game-interface.css'; 
 import Timer from './game-timer';
 import GameFinish from './game-finish';
+// import waldo from './picture-resources/waldo.png'; 
 
+// import waldo from './picture-resources/waldo.png'
 
 export default function Game(props) {
     const { data, saveRecord } = props; 
@@ -13,7 +15,6 @@ export default function Game(props) {
     const coordKeys = data.imgCoords; 
 
     const getCoord = (event) => {
-        listCharac(); 
         const img = document.querySelector('.game-img');
         const xClick = event.pageX - img.offsetLeft;
         const yClick = event.pageY - img.offsetTop;
@@ -29,7 +30,7 @@ export default function Game(props) {
             const xCoord = parseInt(coords[0][0]); 
             const yCoord = parseInt(coords[0][1]); 
 
-            if((xClick > xCoord-40 && xClick < xCoord+40) && (yClick > yCoord-40 && yClick < yCoord+40)){
+            if((xClick > xCoord-20 && xClick < xCoord+20) && (yClick > yCoord-20 && yClick < yCoord+20)){
                 console.log("match");
                 const tempFound = found; 
 
@@ -43,7 +44,7 @@ export default function Game(props) {
         })
     }
 
-    function listCharac() {
+    const allCharac = () => {
         let characters = [];
         coordKeys.map((x) => {
             characters.push(Object.keys(x).toString());
@@ -52,9 +53,9 @@ export default function Game(props) {
     }
 
     const checkFinished = () => {
-        const allCharac = listCharac(); 
+        // const allCharac = listCharac(); 
         let status = 1; 
-        allCharac.map((x) => {
+        allCharac().map((x) => {
             const checker = found.find((y) => y == x); 
             if (!checker) status = 0; 
         })
@@ -67,13 +68,23 @@ export default function Game(props) {
         }
     }
 
+    const DisplayCharacters = () => {
+        return allCharac().map((x) => {
+            return(
+                <img className='char-icon' src={require(`./picture-resources/${x}.png`)}></img>
+            )
+        })
+    }
+
+    
+
     return(
         <div className='game-interface'>
             <div className='timer-container'>
                 <Timer time={time} setTime={setTime} finished={finished} />
             </div>
             <div className='characters-container'>
-
+                <DisplayCharacters/>
             </div>
             <form>
                 <div className='pic-container' onClick={getCoord}>
@@ -82,7 +93,6 @@ export default function Game(props) {
             </form>
 
             <FinishGame/>
-
         </div>
     )
 }

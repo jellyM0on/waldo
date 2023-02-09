@@ -8,26 +8,26 @@
         {
             "img": "https://i.imgur.com/LnzE1JH.jpeg",
             "imgCoords": [{"waldo" : [430, 380]}, {"woof" : [575, 160]}, {"wenda" : [435, 305]}, 
-            {"wiz" : [655, 390]}, {"odlaw" : [420, 90]}
+            {"wizard" : [655, 390]}, {"odlaw" : [585, 480]}
         ],
             "imgCode": "img1-2"
         },
         {
             "img": "https://i.imgur.com/c6morhS.jpeg",
-            "imgCoords": [[]],
-            "imgTofind": ["waldo", "woof", "wiz", "wenda"],
+            "imgCoords": [{"waldo" : [477, 115]}, {"woof" : [940, 190]}, {"wizard" : [690, 90]},
+            {"wenda" : [225, 165]}
+        ],
+            "imgCode": "img2-1"
+        },
+        {
+            "img": "https://i.imgur.com/FAvY6x9.jpeg",
+            "imgCoords": [{"waldo" : [940, 30]}, {"wenda" : [277, 324]}, {"wizard" : [290, 205]}, 
+            {"odlaw" : [900, 285]}],
             "imgCode": "img2-1"
         },
         {
             "img": "https://i.imgur.com/UQLgzwO.jpeg",
-            "imgCoords": [[]],
-            "imgTofind": ["waldo", "wiz", "odlaw"],
-            "imgCode": "img2-2"
-        },
-        {
-            "img": "https://i.imgur.com/FAvY6x9.jpeg",
-            "imgCoords": [[]],
-            "imgTofind": ["waldo", "wenda", "wiz", "odlaw"],
+            "imgCoords": [{"waldo" : [167, 425]}, {"wenda" : [755, 380]}, {"odlaw" : [475, 190]}],
             "imgCode": "img3-1"
         }
     ]
