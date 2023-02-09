@@ -2,15 +2,13 @@ import { useState, useEffect } from 'react';
 import './Styles/game-interface.css'; 
 import Timer from './game-timer';
 import GameFinish from './game-finish';
-// import waldo from './picture-resources/waldo.png'; 
-
-// import waldo from './picture-resources/waldo.png'
 
 export default function Game(props) {
     const { data, saveRecord } = props; 
     const [time, setTime] = useState('00:00:00'); 
     const [found, setFound] = useState([]);
     const [finished, setFinished] = useState(0);
+    const [icon, setIcon] = useState(0); 
 
     const coordKeys = data.imgCoords; 
 
@@ -37,8 +35,8 @@ export default function Game(props) {
                 if(!(tempFound.find((x) => (x == character)))){
                     tempFound.push(character);
                     setFound(tempFound); 
+                    setIcon(100); 
                 }
-
                 checkFinished(); 
             } 
         })
@@ -53,7 +51,6 @@ export default function Game(props) {
     }
 
     const checkFinished = () => {
-        // const allCharac = listCharac(); 
         let status = 1; 
         allCharac().map((x) => {
             const checker = found.find((y) => y == x); 
@@ -68,31 +65,43 @@ export default function Game(props) {
         }
     }
 
-    const DisplayCharacters = () => {
+    const DisplayCharacters = (props) => {
+        const { filter } = props; 
+
         return allCharac().map((x) => {
-            return(
-                <img className='char-icon' src={require(`./picture-resources/${x}.png`)}></img>
-            )
+            const checker = found.find((y) => y == x); 
+            if(checker){
+                return(
+                    <img id={`${x}`} className='char-icon' 
+                    src={require(`./picture-resources/${x}.png`)}
+                    style={{filter: `grayscale(${filter}%)`}}></img>
+                )
+            } else {
+                return(
+                    <img id={`${x}`} className='char-icon' 
+                    src={require(`./picture-resources/${x}.png`)}></img>
+                )
+            }
         })
     }
 
-    
-
     return(
         <div className='game-interface'>
-            <div className='timer-container'>
-                <Timer time={time} setTime={setTime} finished={finished} />
-            </div>
-            <div className='characters-container'>
-                <DisplayCharacters/>
-            </div>
-            <form>
-                <div className='pic-container' onClick={getCoord}>
-                    <img src={data.img} className='game-img'></img>
+            <div>
+                <div className='timer-container'>
+                    <Timer time={time} setTime={setTime} finished={finished} />
                 </div>
-            </form>
+                <div className='characters-container'>
+                    <DisplayCharacters filter={icon}/>
+                </div>
+                <form>
+                    <div className='pic-container' onClick={getCoord}>
+                        <img src={data.img} className='game-img' id={`${data.imgCode}`}></img>
+                    </div>
+                </form>
 
-            <FinishGame/>
+                <FinishGame/>
+            </div>
         </div>
     )
 }
