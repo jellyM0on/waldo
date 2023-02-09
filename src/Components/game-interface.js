@@ -5,16 +5,60 @@ import GameFinish from './game-finish';
 
 
 export default function Game(props) {
-    const { data, saveRecord} = props; 
+    const { data, saveRecord } = props; 
     const [time, setTime] = useState('00:00:00'); 
+    const [found, setFound] = useState([]);
     const [finished, setFinished] = useState(0);
 
+    const coordKeys = data.imgCoords; 
+
     const getCoord = (event) => {
-        console.log(event.clientY);
-        console.log(event.clientX); 
-        if((event.clientY > 130 && event.clientY < 170) && (event.clientX > 400 && event.clientX < 440)){
-            setFinished(1); 
-        }
+        listCharac(); 
+        const img = document.querySelector('.game-img');
+        const xClick = event.pageX - img.offsetLeft;
+        const yClick = event.pageY - img.offsetTop;
+        console.log(xClick);
+        console.log(yClick);  
+        checkCoords(xClick, yClick);
+    }
+
+    const checkCoords = (xClick, yClick) => {
+        coordKeys.map((a) => {
+            const character = (Object.keys(a)).toString();
+            const coords = Object.values(a); 
+            const xCoord = parseInt(coords[0][0]); 
+            const yCoord = parseInt(coords[0][1]); 
+
+            if((xClick > xCoord-40 && xClick < xCoord+40) && (yClick > yCoord-40 && yClick < yCoord+40)){
+                console.log("match");
+                const tempFound = found; 
+
+                if(!(tempFound.find((x) => (x == character)))){
+                    tempFound.push(character);
+                    setFound(tempFound); 
+                }
+
+                checkFinished(); 
+            } 
+        })
+    }
+
+    function listCharac() {
+        let characters = [];
+        coordKeys.map((x) => {
+            characters.push(Object.keys(x).toString());
+        });
+        return characters; 
+    }
+
+    const checkFinished = () => {
+        const allCharac = listCharac(); 
+        let status = 1; 
+        allCharac.map((x) => {
+            const checker = found.find((y) => y == x); 
+            if (!checker) status = 0; 
+        })
+        if(status) setFinished(1); 
     }
 
     const FinishGame = () => {
@@ -24,15 +68,16 @@ export default function Game(props) {
     }
 
     return(
-        <div>
-            <div>Where's Waldo</div>
+        <div className='game-interface'>
             <div className='timer-container'>
                 <Timer time={time} setTime={setTime} finished={finished} />
             </div>
+            <div className='characters-container'>
 
+            </div>
             <form>
                 <div className='pic-container' onClick={getCoord}>
-                    <img src={data.img}></img>
+                    <img src={data.img} className='game-img'></img>
                 </div>
             </form>
 
