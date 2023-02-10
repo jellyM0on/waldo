@@ -22,7 +22,7 @@ function App(props) {
           {imgs.map((img, i) => (
             <Route key={i} exact path={`/${img.imgCode}`} element={<Game saveRecord={saveRecord} data={img}/>} ></Route>
           ))}
-          <Route exact path={`/leaderboard`} element={<Leaderboard getRecord={getRecord}/>} ></Route>
+          <Route exact path={`/leaderboard`} element={<Leaderboard getRecord={getRecord} imgs={imgs}/>} ></Route>
         </Routes>
       </BrowserRouter>
     </div>
