@@ -1,58 +1,81 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 export default function Leaderboard(props){
     const { getRecord, imgs } = props; 
     const [records, setRecords] = useState();  
-    const [loading, setLoading] = useState(true);  
+    const [sorted, setSorted] = useState([]);  
     const [selected, setSelected] = useState(); 
+    const [test, setTest] = useState(); 
 
     useEffect(() => {
         (async () => {
-            const records = await getRecord(); 
-            setRecords(records); 
-            setLoading(false); 
-        })()  
+            const record = await getRecord(); 
+            setRecords(record);
+        })() 
     },[]);
 
-    const LoadRecords = (props) => {
-        const { selected } = props;
-            if(loading){
-                return(
-                    <div>
-                        Loading...
-                    </div>
-                )
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if(test != 1){
+                setTest(test + 1); 
             } 
-            if(records){
-                return(
-                    <DisplayRecords selected = {selected}/>
-                )
-            }         
+        }, 1000); 
+        return () => {
+            clearInterval(interval); 
+        }
+    }, []);
+
+    useEffect(() => {
+        if(!selected && records){
+           setSorted(sortRec(records, 'img1-1')); 
+        }
+    }, [test])
+
+    useEffect(() => {
+        if(records){
+            const sortedRec = sortRec(records, selected); 
+            setSorted(sortedRec); 
+        }
+    }, [selected])
+
+    const sortRec = (records, selected) => {
+        const toNumber = (str) => {
+            str = str.split(':');
+            let numArr = str.join(''); 
+            return parseInt(numArr); 
+        }
+        console.log(records); 
+        const filtered = records.filter(x => x.game == selected);
+        const sorted = filtered.sort((a,b) => toNumber(a.time) > toNumber(b.time)? 1 : -1)
+        return sorted; 
     }
 
-    const DisplayRecords = (props) => {
-        const { selected } = props; 
-        const data = sortRecords(selected); 
-    
+    const DisplayRec = (props) => {
+        const { data, test } = props; 
+
         if(data.length >= 1){
             return(
                 <table>
+                
+                    <thead></thead>
+                    <tbody>
                     {data.map((x, i) => {
                         if(i <=19 ){
                             return(
-                                <DataRow name={x.name} time={x.time} rank={i+1}/> 
+                                <DataRow name={x.name} time={x.time} rank={i+1} key={i}/> 
                             )
                         } else {
                             return; 
                         }
                     })}
+                    </tbody>
+                    <tfoot></tfoot>
                 </table>
             )
         } else {
             return(
                 <div>No records yet!</div>
             )
-            
         }
     }
 
@@ -67,22 +90,7 @@ export default function Leaderboard(props){
             </tr>
         )
     }
-
-    const toNumber = (str) => {
-        str = str.split(':');
-        let numArr = str.join(''); 
-        return parseInt(numArr); 
-    }
-
-    const sortRecords = (selected) => {
-        if(records) {
-            const filtered = records.filter(x => x.game == selected);
-            const sorted = filtered.sort((a,b) => toNumber(a.time) > toNumber(b.time)? 1 : -1)
-            return sorted; 
-        } else {
-            return []; 
-        }
-    }
+    
 
     const dropdownHandler = (e) => {
         setSelected(e.target.value); 
@@ -91,12 +99,11 @@ export default function Leaderboard(props){
     return(
         <div>
            <select id='games-dropdown' onChange={dropdownHandler}>
-                <option>--</option>
                 {imgs.map((img, i) => {
                     return <option key={i}>{img.imgCode}</option>
                 })}
            </select>
-           <LoadRecords records = {records} selected = {selected} />
+           <DisplayRec data={sorted} test={selected}/>
         </div>
     )
 }
