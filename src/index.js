@@ -10,8 +10,11 @@ import {
   setDoc,
   updateDoc,
   doc,
+  getDoc,
   serverTimestamp,
+  getDocs,
 } from 'firebase/firestore';
+import uniqid from 'uniqid'; 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
@@ -27,14 +30,19 @@ const firebaseConfig = {
   appId: "1:912078504678:web:1f6c638c8f09341ccc3127"
 };
 
-const app = initializeApp(firebaseConfig); 
+initializeApp(firebaseConfig); 
 
+const db = getFirestore(); 
+const colRef = collection(db, 'user-records');  
+
+let userId = uniqid(); 
 //save scores
 async function saveRecord(record) {
   try {
-    await addDoc(collection(getFirestore(), 'user-records'), {
+    await setDoc(doc(db, 'user-records', userId), {
       name: record.name,
       time: record.time,
+      game: record.game,
       timestamp: serverTimestamp()
     });
   }
@@ -43,10 +51,26 @@ async function saveRecord(record) {
   }
 }
 
+//retrieve scores
+function getRecord() {
+  let records = []
+  try {
+    getDocs(colRef).then((snapshot) => {
+      snapshot.docs.forEach((doc) => {
+        records.push({ ...doc.data() }); 
+      })
+    }); 
+  }
+  catch(error){
+    console.error(error); 
+  }
+  return records; 
+}
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App saveRecord={saveRecord}/>
+    <App saveRecord={saveRecord} getRecord={getRecord}/>
   </React.StrictMode>
 );
 

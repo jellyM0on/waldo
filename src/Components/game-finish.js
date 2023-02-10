@@ -5,8 +5,9 @@ export default function GameFinish(props){
     const [record, setRecord] = useState();
 
     const userRecord = (name, time) => {
-        //find gamecode
-        return { name, time }; 
+        const gameImg = document.querySelector('.game-img');
+        const game = gameImg.id 
+        return { name, time, game }; 
     }
 
     const recordInfo = (e) => {
@@ -14,15 +15,14 @@ export default function GameFinish(props){
         const nameInput = document.querySelector('#user-name'); 
         const name = nameInput.value; 
         const record = userRecord(name, time);
-        // saveRecord(record); 
+        saveRecord(record); 
     }
-
 
 
     return(
         <div>
             <form>
-                <p></p>
+                <p>You found all the characters within {time}!</p>
                 <label htmlFor='user-name' >Name: </label>
                 <input type='text' id='user-name'></input>
                 <button onClick={recordInfo}>Submit</button>

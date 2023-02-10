@@ -4,9 +4,10 @@ import Selection from './Components/game-selection';
 import Game from './Components/game-interface';
 import * as gamelist from './Components/game-resources.json';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Leaderboard from './Components/leaderboard';
 
 function App(props) {
-  const { saveRecord } = props;
+  const { saveRecord, getRecord } = props;
 
   const list = JSON.stringify(gamelist); 
   const imgList = JSON.parse(list); 
@@ -21,17 +22,9 @@ function App(props) {
           {imgs.map((img, i) => (
             <Route key={i} exact path={`/${img.imgCode}`} element={<Game saveRecord={saveRecord} data={img}/>} ></Route>
           ))}
+          <Route exact path={`/leaderboard`} element={<Leaderboard getRecord={getRecord}/>} ></Route>
         </Routes>
       </BrowserRouter>
-
-
-
-
-      
-     
-      
-
-      {/* <Game saveRecord={saveRecord}/> */}
     </div>
   );
 }
