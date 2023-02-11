@@ -5,7 +5,7 @@ export default function Leaderboard(props){
     const [records, setRecords] = useState();  
     const [sorted, setSorted] = useState([]);  
     const [selected, setSelected] = useState(); 
-    const [test, setTest] = useState(); 
+    const [loading, setLoading] = useState(0); 
 
     useEffect(() => {
         (async () => {
@@ -16,20 +16,20 @@ export default function Leaderboard(props){
 
     useEffect(() => {
         const interval = setInterval(() => {
-            if(test != 1){
-                setTest(test + 1); 
+            if(loading != 1){
+                setLoading(1); 
             } 
         }, 1000); 
         return () => {
             clearInterval(interval); 
         }
-    }, []);
+    }, [records]);
 
     useEffect(() => {
         if(!selected && records){
            setSorted(sortRec(records, 'img1-1')); 
         }
-    }, [test])
+    }, [loading])
 
     useEffect(() => {
         if(records){
@@ -53,6 +53,10 @@ export default function Leaderboard(props){
     const DisplayRec = (props) => {
         const { data, test } = props; 
 
+        if(!loading){
+            <div>Loading...</div>
+        }
+
         if(data.length >= 1){
             return(
                 <table>
@@ -73,11 +77,19 @@ export default function Leaderboard(props){
                 </table>
             )
         } else {
-            return(
-                <div>No records yet!</div>
-            )
+            if(loading == 0){
+                return(
+                    <div>Loading...</div>
+                )
+            } else {
+                return(
+                    <div>No records yet!</div>
+                )
+            }
         }
     }
+
+        
 
     const DataRow = (props) => {
         const { rank, name, time, date } = props; 
